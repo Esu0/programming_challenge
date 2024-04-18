@@ -1,5 +1,6 @@
 #[allow(unused_imports)]
-#[macro_use] extern crate dmoj;
+#[macro_use]
+extern crate dmoj;
 
 fn read_line() -> String {
     let mut s = String::new();
