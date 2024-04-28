@@ -11,7 +11,7 @@ enum Hand {
     Paper,
 }
 
-impl<'a> FromStr for Hand {
+impl FromStr for Hand {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {

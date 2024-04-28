@@ -1,0 +1,9 @@
+[workspace]
+members = ["week1/week1", "week2", "week3"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+
+[workspace.dependencies]
+dmoj = "0.1.5"

@@ -3,8 +3,6 @@ use std::{
     ops::{Add, Sub},
 };
 
-use dmoj::scan;
-
 struct UnionFind<T> {
     uf: Vec<usize>,
     size: Vec<usize>,

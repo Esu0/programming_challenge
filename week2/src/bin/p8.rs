@@ -164,25 +164,25 @@ impl<T> SegTree<T> {
     ) {
         if range.end <= current_range.start || current_range.end <= range.start {
             return;
-        } else if current_range.end - current_range.start <= 1 {
-            return;
-        } else {
-            let mid = (current_range.start + current_range.end) / 2;
-            let ind1 = ind * 2;
-            query(&self.data[ind1]);
-            self.dfs_rec(
-                range.clone(),
-                query,
-                undo,
-                current_range.start..mid,
-                ind * 2,
-            );
-            undo(&self.data[ind1]);
-            let ind2 = ind1 + 1;
-            query(&self.data[ind2]);
-            self.dfs_rec(range, query, undo, mid..current_range.end, ind * 2 + 1);
-            undo(&self.data[ind2]);
         }
+        if current_range.end - current_range.start <= 1 {
+            return;
+        }
+        let mid = (current_range.start + current_range.end) / 2;
+        let ind1 = ind * 2;
+        query(&self.data[ind1]);
+        self.dfs_rec(
+            range.clone(),
+            query,
+            undo,
+            current_range.start..mid,
+            ind * 2,
+        );
+        undo(&self.data[ind1]);
+        let ind2 = ind1 + 1;
+        query(&self.data[ind2]);
+        self.dfs_rec(range, query, undo, mid..current_range.end, ind * 2 + 1);
+        undo(&self.data[ind2]);
     }
 }
 

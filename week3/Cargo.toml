@@ -1,11 +1,9 @@
 [package]
-name = "week2"
+name = "week3"
 version = "0.1.0"
-edition = "2021"
+edition.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dmoj = "0.1.5"
-proconio = "0.4.5"
-rand = "0.8.5"
+dmoj.workspace = true
