@@ -1,4 +1,4 @@
-use std::iter;
+use std::collections::HashSet;
 
 mod input {
     use std::{
@@ -41,24 +41,24 @@ mod input {
 }
 
 fn main() {
-    let (r, _) = scan!(usize, usize);
-    let grid = iter::repeat_with(|| scan!(String).into_bytes())
-        .take(r)
-        .collect::<Vec<_>>();
-    let mut count = [0; 5];
-    for rx2 in grid.windows(2) {
-        let [r1, r2] = rx2 else { unreachable!() };
-        for cellx4 in r1.windows(2).zip(r2.windows(2)) {
-            let (&[ul, ur], &[dl, dr]) = cellx4 else {
-                unreachable!()
-            };
-            let cells = [ul, ur, dl, dr];
-            if !cells.contains(&b'#') {
-                count[cells.iter().filter(|c| **c == b'X').count()] += 1;
+    let (n, m) = scan!(usize, usize);
+    let l = (0..n).map(|_| {let ki = scan!(usize); (0..ki).map(|_| scan!(u16)).collect::<HashSet<_>>()}).collect::<Vec<_>>();
+    let notes = (0..m).map(|_| scan!(u16)).collect::<Vec<_>>();
+    let mut flg = vec![true; n];
+    let mut i = 0;
+    let mut ans = 0;
+    while i < m {
+        for (keyboard, flg) in l.iter().zip(&mut flg) {
+            if *flg && !keyboard.contains(&notes[i]) {
+                *flg = false;
             }
         }
+        if flg.iter().all(|&x| !x) {
+            ans += 1;
+            flg.iter_mut().for_each(|x| *x = true);
+        } else {
+            i += 1;
+        }
     }
-    for ans in count {
-        println!("{ans}");
-    }
+    println!("{ans}");
 }

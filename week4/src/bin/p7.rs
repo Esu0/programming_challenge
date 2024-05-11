@@ -1,5 +1,3 @@
-use std::iter;
-
 mod input {
     use std::{
         cell::RefCell,
@@ -40,25 +38,39 @@ mod input {
     }
 }
 
+fn comb(n: usize, k: usize) -> usize {
+    let mut res = 1;
+    for i in 0..k {
+        res *= n - i;
+        res /= i + 1;
+    }
+    res
+}
+
 fn main() {
-    let (r, _) = scan!(usize, usize);
-    let grid = iter::repeat_with(|| scan!(String).into_bytes())
-        .take(r)
-        .collect::<Vec<_>>();
-    let mut count = [0; 5];
-    for rx2 in grid.windows(2) {
-        let [r1, r2] = rx2 else { unreachable!() };
-        for cellx4 in r1.windows(2).zip(r2.windows(2)) {
-            let (&[ul, ur], &[dl, dr]) = cellx4 else {
-                unreachable!()
-            };
-            let cells = [ul, ur, dl, dr];
-            if !cells.contains(&b'#') {
-                count[cells.iter().filter(|c| **c == b'X').count()] += 1;
+    let g = scan!(u8);
+    for game in 1..=g {
+        let m = scan!(u8) as usize;
+        let labels = (0..m).map(|_| scan!(u32)).collect::<Vec<_>>();
+        let (n, t) = (scan!(u8) as usize, scan!(u16) as usize);
+        let mut dp = std::array::from_fn::<_, 31, _>(|i| vec![vec![0u32; t + 1]; i + 1]);
+        for dpi in &mut dp {
+            dpi[0][0] = 1;
+        }
+        for i in 1..=m {
+            for j in 1..=i.min(n) {
+                for k in 1..=t {
+                    let label = labels[i - 1] as usize;
+                    if k >= label {
+                        dp[i][j][k] = dp[i - 1][j - 1][k - label];
+                    }
+                    if i > j {
+                        dp[i][j][k] += dp[i - 1][j][k];
+                    }
+                }
             }
         }
-    }
-    for ans in count {
-        println!("{ans}");
+        let ans = dp[m][n][t] as usize;
+        println!("Game {game} -- {ans} : {}", comb(m, n) - ans);
     }
 }

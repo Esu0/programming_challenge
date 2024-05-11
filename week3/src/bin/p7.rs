@@ -1,5 +1,4 @@
 use std::iter;
-
 mod input {
     use std::{
         cell::RefCell,
@@ -41,24 +40,21 @@ mod input {
 }
 
 fn main() {
-    let (r, _) = scan!(usize, usize);
-    let grid = iter::repeat_with(|| scan!(String).into_bytes())
-        .take(r)
+    let n = scan!(usize);
+    let mut lu = iter::repeat_with(|| scan!(u32, u32))
+        .take(n)
         .collect::<Vec<_>>();
-    let mut count = [0; 5];
-    for rx2 in grid.windows(2) {
-        let [r1, r2] = rx2 else { unreachable!() };
-        for cellx4 in r1.windows(2).zip(r2.windows(2)) {
-            let (&[ul, ur], &[dl, dr]) = cellx4 else {
-                unreachable!()
-            };
-            let cells = [ul, ur, dl, dr];
-            if !cells.contains(&b'#') {
-                count[cells.iter().filter(|c| **c == b'X').count()] += 1;
-            }
+    lu.sort_unstable_by_key(|(_, u)| *u);
+    let mut deleted = [false; 100];
+    let mut ans = 0;
+    for (i, &(_, u)) in lu.iter().enumerate() {
+        if !deleted[i] {
+            ans += 1;
+            lu.iter()
+                .enumerate()
+                .filter(|&(_, &(l2, u2))| l2 <= u && u <= u2)
+                .for_each(|(i, _)| deleted[i] = true);
         }
     }
-    for ans in count {
-        println!("{ans}");
-    }
+    println!("{ans}");
 }

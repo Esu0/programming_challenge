@@ -1,4 +1,4 @@
-use std::iter;
+use std::cmp::Reverse;
 
 mod input {
     use std::{
@@ -41,24 +41,24 @@ mod input {
 }
 
 fn main() {
-    let (r, _) = scan!(usize, usize);
-    let grid = iter::repeat_with(|| scan!(String).into_bytes())
-        .take(r)
-        .collect::<Vec<_>>();
-    let mut count = [0; 5];
-    for rx2 in grid.windows(2) {
-        let [r1, r2] = rx2 else { unreachable!() };
-        for cellx4 in r1.windows(2).zip(r2.windows(2)) {
-            let (&[ul, ur], &[dl, dr]) = cellx4 else {
-                unreachable!()
-            };
-            let cells = [ul, ur, dl, dr];
-            if !cells.contains(&b'#') {
-                count[cells.iter().filter(|c| **c == b'X').count()] += 1;
-            }
+    let (n, h) = scan!(usize, u32);
+    let (mut f, mut c) = (0..(n / 2)).map(|_| scan!(u32, u32)).unzip::<_, _, Vec<_>, Vec<_>>();
+    f.sort_unstable();
+    c.sort_unstable_by_key(|&x| Reverse(x));
+    // let mut ob = f.len();
+    let mut i = 0;
+    let mut j = 0;
+    let ans = (1..=h).map(|l| {
+        while i < f.len() && f[i] < l {
+            i += 1;
         }
-    }
-    for ans in count {
-        println!("{ans}");
-    }
+        while j < c.len() && h - c[j] < l {
+            j += 1;
+        }
+        // println!("l: {l}, ob: {}", (j + f.len() - i));
+        (j + f.len() - i) as u32
+    }).collect::<Vec<_>>();
+    let min = *ans.iter().min().unwrap();
+    let cnt = ans.iter().filter(|&x| *x == min).count();
+    println!("{} {}", min, cnt)
 }

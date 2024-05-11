@@ -1,4 +1,3 @@
-
 mod input {
     use std::{
         cell::RefCell,

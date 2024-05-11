@@ -52,7 +52,11 @@ fn main() {
     let mut p = scan_array::<u32>(n as usize);
     let c = scan_array::<u32>(m as usize);
     let s = scan_array::<u32>(k as usize);
-    let mut h = c.into_iter().map(|r| 2 * r * r).chain(s.into_iter().map(|l| l * l)).collect::<Vec<_>>();
+    let mut h = c
+        .into_iter()
+        .map(|r| 2 * r * r)
+        .chain(s.into_iter().map(|l| l * l))
+        .collect::<Vec<_>>();
     h.sort_unstable_by_key(|&x| Reverse(x));
     p.iter_mut().for_each(|pi| *pi = 2 * *pi * *pi);
     p.sort_unstable_by_key(|&x| Reverse(x));

@@ -1,4 +1,4 @@
-use std::iter;
+use std::{collections::BTreeMap, iter};
 
 mod input {
     use std::{
@@ -41,24 +41,24 @@ mod input {
 }
 
 fn main() {
-    let (r, _) = scan!(usize, usize);
-    let grid = iter::repeat_with(|| scan!(String).into_bytes())
-        .take(r)
+    let (n, k) = scan!(usize, usize);
+    let mut sf = iter::repeat_with(|| scan!(u32, u32))
+        .take(n)
         .collect::<Vec<_>>();
-    let mut count = [0; 5];
-    for rx2 in grid.windows(2) {
-        let [r1, r2] = rx2 else { unreachable!() };
-        for cellx4 in r1.windows(2).zip(r2.windows(2)) {
-            let (&[ul, ur], &[dl, dr]) = cellx4 else {
-                unreachable!()
-            };
-            let cells = [ul, ur, dl, dr];
-            if !cells.contains(&b'#') {
-                count[cells.iter().filter(|c| **c == b'X').count()] += 1;
+
+    // println!("{sf:?}");
+    sf.sort_unstable_by_key(|&(s, f)| [f, s]);
+    let mut set = BTreeMap::from([(0u32, k)]);
+    let mut ans = 0;
+    for (s, f) in sf {
+        if let Some((&last, count)) = set.range_mut(..s).last() {
+            ans += 1;
+            *count -= 1;
+            if *count == 0 {
+                set.remove(&last);
             }
+            set.entry(f).and_modify(|c| *c += 1).or_insert(1);
         }
     }
-    for ans in count {
-        println!("{ans}");
-    }
+    println!("{ans}");
 }
