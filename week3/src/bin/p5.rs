@@ -88,13 +88,23 @@ fn main() {
                 let div = dx2 * dy1 + dx1 * dy2;
                 let intersec_t = intersec * dx1 + x1 * (dx2 * dy1 + dx1 * dy2);
                 let del = intersec as f64 / div as f64;
-        
-                if ((x1 * div)..=(next_x1 * div)).contains(&intersec_t) && ((x2 * div)..=(next_x2 * div)).contains(&intersec_t) {
-                    println!("intersec: {}, {} (answer)", intersec_t as f64 / div as f64, y1 as f64 + del * dy1 as f64);
+
+                if ((x1 * div)..=(next_x1 * div)).contains(&intersec_t)
+                    && ((x2 * div)..=(next_x2 * div)).contains(&intersec_t)
+                {
+                    println!(
+                        "intersec: {}, {} (answer)",
+                        intersec_t as f64 / div as f64,
+                        y1 as f64 + del * dy1 as f64
+                    );
                     // println!("{}", intersec_t as f64 / div as f64);
                     // return;
                 } else {
-                    println!("intersec: {}, {}", x1 as f64 + del * dx1 as f64, y1 as f64 + del * dy1 as f64);
+                    println!(
+                        "intersec: {}, {}",
+                        x1 as f64 + del * dx1 as f64,
+                        y1 as f64 + del * dy1 as f64
+                    );
                 }
             }
             if di >= d - 1 {

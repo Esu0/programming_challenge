@@ -42,7 +42,12 @@ mod input {
 
 fn main() {
     let (n, m) = scan!(usize, usize);
-    let l = (0..n).map(|_| {let ki = scan!(usize); (0..ki).map(|_| scan!(u16)).collect::<HashSet<_>>()}).collect::<Vec<_>>();
+    let l = (0..n)
+        .map(|_| {
+            let ki = scan!(usize);
+            (0..ki).map(|_| scan!(u16)).collect::<HashSet<_>>()
+        })
+        .collect::<Vec<_>>();
     let notes = (0..m).map(|_| scan!(u16)).collect::<Vec<_>>();
     let mut flg = vec![true; n];
     let mut i = 0;

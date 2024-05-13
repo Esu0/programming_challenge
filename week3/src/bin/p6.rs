@@ -42,22 +42,26 @@ mod input {
 
 fn main() {
     let (n, h) = scan!(usize, u32);
-    let (mut f, mut c) = (0..(n / 2)).map(|_| scan!(u32, u32)).unzip::<_, _, Vec<_>, Vec<_>>();
+    let (mut f, mut c) = (0..(n / 2))
+        .map(|_| scan!(u32, u32))
+        .unzip::<_, _, Vec<_>, Vec<_>>();
     f.sort_unstable();
     c.sort_unstable_by_key(|&x| Reverse(x));
     // let mut ob = f.len();
     let mut i = 0;
     let mut j = 0;
-    let ans = (1..=h).map(|l| {
-        while i < f.len() && f[i] < l {
-            i += 1;
-        }
-        while j < c.len() && h - c[j] < l {
-            j += 1;
-        }
-        // println!("l: {l}, ob: {}", (j + f.len() - i));
-        (j + f.len() - i) as u32
-    }).collect::<Vec<_>>();
+    let ans = (1..=h)
+        .map(|l| {
+            while i < f.len() && f[i] < l {
+                i += 1;
+            }
+            while j < c.len() && h - c[j] < l {
+                j += 1;
+            }
+            // println!("l: {l}, ob: {}", (j + f.len() - i));
+            (j + f.len() - i) as u32
+        })
+        .collect::<Vec<_>>();
     let min = *ans.iter().min().unwrap();
     let cnt = ans.iter().filter(|&x| *x == min).count();
     println!("{} {}", min, cnt)

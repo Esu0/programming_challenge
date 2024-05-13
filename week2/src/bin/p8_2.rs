@@ -170,8 +170,11 @@ fn main() {
             return;
         };
         let m = line.next().unwrap().parse::<usize>().unwrap();
-        let mut uf =
-            DeletableUnionFind::new((0..=n).map(|i| (SumQuery(1u64), SumQuery(i as u64))).collect());
+        let mut uf = DeletableUnionFind::new(
+            (0..=n)
+                .map(|i| (SumQuery(1u64), SumQuery(i as u64)))
+                .collect(),
+        );
         for _ in 0..m {
             let line = get_line().unwrap();
             let mut iter = line.split_whitespace().map(|s| s.parse::<usize>().unwrap());

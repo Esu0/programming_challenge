@@ -6,7 +6,11 @@ fn main() {
     let m = 10;
     let mut rng = rand::thread_rng();
     for _ in 0..m {
-        v.push((rng.gen_range(1..=2), rng.gen_range(1..=n), rng.gen_range(1..=n)));
+        v.push((
+            rng.gen_range(1..=2),
+            rng.gen_range(1..=n),
+            rng.gen_range(1..=n),
+        ));
     }
     println!("{n} {}", m + n);
     v.iter().for_each(|vi| {

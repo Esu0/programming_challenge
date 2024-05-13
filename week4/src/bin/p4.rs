@@ -78,7 +78,9 @@ fn main() {
             let p1 = sum - sum1[o];
             for c in o..n {
                 let p = p1 - sum2[c] - 8 * (data[c].0 - data[o].0 + 1) as i32;
-                ans = std::cmp::max_by_key(ans, (p, data[o].0, data[c].0), |&(p, o, c)| (p, Reverse(c - o), Reverse(o)));
+                ans = std::cmp::max_by_key(ans, (p, data[o].0, data[c].0), |&(p, o, c)| {
+                    (p, Reverse(c - o), Reverse(o))
+                });
             }
         }
         if ans.0 != 0 {
