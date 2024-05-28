@@ -115,3 +115,11 @@ dependencies = [
 [[package]]
 name = "week4"
 version = "0.1.0"
+
+[[package]]
+name = "week5"
+version = "0.1.0"
+
+[[package]]
+name = "week6"
+version = "0.1.0"
