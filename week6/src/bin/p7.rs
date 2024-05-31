@@ -44,15 +44,11 @@ fn main() {
         if n == 0 {
             break;
         }
-        let roads = (0..m).map(|_| scan!(usize, usize, u8));
-        let alien_bases = (0..a).map(|_| scan!(usize));
-        let mut adj = vec![vec![]; n];
-        let mut dist = vec![vec![]; n];
-        for (u, v, w) in roads {
-            adj[u].push(v);
-            adj[v].push(u);
-            dist[u].push(w);
-            dist[v].push(w);
-        }
+        let roads = (0..m).map(|_| (scan!(usize) - 1, scan!(usize) - 1, scan!(u8))).collect::<Vec<_>>();
+        let alien_bases = (0..a).map(|_| scan!(usize) - 1);
+        
+
+        let mut mark = vec![(0u32, 0u32); n];
+        
     }
 }
