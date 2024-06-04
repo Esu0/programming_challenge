@@ -38,17 +38,4 @@ mod input {
     }
 }
 
-fn main() {
-    loop {
-        let (n, m, a, k) = scan!(usize, usize, usize, u8);
-        if n == 0 {
-            break;
-        }
-        let roads = (0..m)
-            .map(|_| (scan!(usize) - 1, scan!(usize) - 1, scan!(u8)))
-            .collect::<Vec<_>>();
-        let alien_bases = (0..a).map(|_| scan!(usize) - 1);
-
-        let mut mark = vec![(0u32, 0u32); n];
-    }
-}
+fn main() {}

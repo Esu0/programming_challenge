@@ -39,16 +39,23 @@ mod input {
 }
 
 fn main() {
-    loop {
-        let (n, m, a, k) = scan!(usize, usize, usize, u8);
-        if n == 0 {
-            break;
-        }
-        let roads = (0..m)
-            .map(|_| (scan!(usize) - 1, scan!(usize) - 1, scan!(u8)))
+    let n = scan!(u8);
+    for _ in 0..n {
+        let (k, w) = scan!(u8, u8);
+        let words = (0..w)
+            .map(|_| scan!(String).into_bytes())
             .collect::<Vec<_>>();
-        let alien_bases = (0..a).map(|_| scan!(usize) - 1);
-
-        let mut mark = vec![(0u32, 0u32); n];
+        let mut ans = 0;
+        for wx2 in words.windows(2) {
+            let [w1, w2] = wx2 else {
+                unreachable!();
+            };
+            let mut pos = 0;
+            while !w2.starts_with(&w1[pos..]) {
+                pos += 1;
+            }
+            ans += pos;
+        }
+        println!("{}", ans + k as usize);
     }
 }

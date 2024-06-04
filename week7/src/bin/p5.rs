@@ -39,16 +39,32 @@ mod input {
 }
 
 fn main() {
-    loop {
-        let (n, m, a, k) = scan!(usize, usize, usize, u8);
-        if n == 0 {
-            break;
+    let n = scan!(String).into_bytes();
+    let mut i = 1;
+    while i < n.len() && n[i - 1] <= n[i] {
+        i += 1;
+    }
+    let mut j = (i + 1).min(n.len());
+    while j < n.len() && n[j - 1] >= n[j] {
+        j += 1;
+    }
+    println!("{} {}", i, j);
+    if j != n.len() {
+        println!("-1");
+    } else {
+        let len = j;
+        let mut dp1 = vec![[0u64; 10]; len];
+        dp1[0] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        for i in 1..len {
+            for j in 1..10 {
+                dp1[i][j] = dp1[i - 1][j] + dp1[i][j - 1];
+            }
         }
-        let roads = (0..m)
-            .map(|_| (scan!(usize) - 1, scan!(usize) - 1, scan!(u8)))
-            .collect::<Vec<_>>();
-        let alien_bases = (0..a).map(|_| scan!(usize) - 1);
-
-        let mut mark = vec![(0u32, 0u32); n];
+        eprintln!("{:?}", dp1);
+        let mut sum = 0u64;
+        for k in (i..len).rev() {
+            sum += dp1[len - k][(n[k] - b'0') as usize];
+        }
+        println!("{}", sum);
     }
 }

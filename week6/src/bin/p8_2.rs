@@ -102,7 +102,7 @@ fn main() {
         let mut queue_tail = 1;
         queue[0] = s;
         let mut level = vec![0u32; 2 * c * r + 1];
-        
+
         while let Some(node) = {
             if queue_head == queue_tail {
                 None
@@ -143,7 +143,9 @@ fn main() {
                     break;
                 }
                 let next = adj[node][current_edge_i];
-                if current_edge_level + 1 == level[next] && redundant.get(&(node, next)).map(|&v| v > 0).unwrap_or(true) {
+                if current_edge_level + 1 == level[next]
+                    && redundant.get(&(node, next)).map(|&v| v > 0).unwrap_or(true)
+                {
                     i += 1;
                     path[i] = (next, current_edge_i);
                     current_edge[node] = current_edge_i;
