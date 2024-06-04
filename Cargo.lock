@@ -127,3 +127,6 @@ version = "0.1.0"
 [[package]]
 name = "week7"
 version = "0.1.0"
+dependencies = [
+ "rand",
+]

@@ -52,7 +52,9 @@ fn main() {
                 let &[a, b] = w else {
                     unreachable!();
                 };
-                if a.get(..l).is_some_and(|x| b.get(..l).is_some_and(|y| x == y)) {
+                if a.get(..l)
+                    .is_some_and(|x| b.get(..l).is_some_and(|y| x == y))
+                {
                     count += 1;
                 } else {
                     max_count = max_count.max(count);
