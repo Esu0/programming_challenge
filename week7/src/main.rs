@@ -40,8 +40,14 @@ fn main() {
     println!("{:?}", cost);
     println!("{:?}", cost_set);
 
-    println!("left cost: {}", cost_set.iter().map(|&(_, _, cx, _)| cx).sum::<usize>());
-    println!("right cost: {}", cost_set.iter().map(|&(_, _, _, cy)| cy).sum::<usize>());
+    println!(
+        "left cost: {}",
+        cost_set.iter().map(|&(_, _, cx, _)| cx).sum::<usize>()
+    );
+    println!(
+        "right cost: {}",
+        cost_set.iter().map(|&(_, _, _, cy)| cy).sum::<usize>()
+    );
 
     let mut sum = 0;
     while !cost_set.is_empty() {

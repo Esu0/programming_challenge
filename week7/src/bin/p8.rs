@@ -75,7 +75,10 @@ fn main() {
         }
         // println!("{:?}", cost);
         // println!("{:?}", cost_set);
-        println!("{}", cost_set.iter().map(|&(_, _, cx, _)| cx).sum::<usize>());
+        println!(
+            "{}",
+            cost_set.iter().map(|&(_, _, cx, _)| cx).sum::<usize>()
+        );
 
         let mut sum = 0;
         while !cost_set.is_empty() {
