@@ -2,7 +2,7 @@ use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 use rand::SeedableRng;
 fn main() {
-    let mut a = b"aaaaaabbbbbbccccccddddddeeeeeeffffffg".to_owned();
+    let mut a = b"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuv".to_owned();
     let mut rng = StdRng::seed_from_u64(38497981);
     a.shuffle(&mut rng);
     println!("{}", std::str::from_utf8(&a).unwrap());
