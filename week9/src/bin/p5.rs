@@ -39,22 +39,18 @@ mod input {
 }
 
 fn main() {
-    let n = scan!(u8);
-    for _ in 0..n {
-        let m = scan!(usize);
-        let points = (0..m).map(|_| scan!(i32, i32)).collect::<Vec<_>>();
-        let mut s = points
-            .windows(2)
-            .map(|w| {
-                let &[(x1, y1), (x2, y2)] = w else {
-                    unreachable!()
-                };
-                (x1 - x2) * (y1 + y2)
-            })
-            .sum::<i32>();
-        let &(first_x, first_y) = points.first().unwrap();
-        let &(last_x, last_y) = points.last().unwrap();
-        s += (last_x - first_x) * (last_y + first_y);
-        println!("{}", s.abs() as f64 / 2.);
+    loop {
+        let (a, b, s, m, n) = scan!(u32, u32, u32, u32, u32);
+        if a == 0 {
+            return;
+        }
+        let a = a as f64;
+        let b = b as f64;
+        let s = s as f64;
+        let m = m as f64;
+        let n = n as f64;
+        let angle = (n * b / (m * a)).atan().to_degrees();
+        let v = ((m * a).powi(2) + (n * b).powi(2)).sqrt() / s;
+        println!("{:.2} {:.2}", angle, v);
     }
 }

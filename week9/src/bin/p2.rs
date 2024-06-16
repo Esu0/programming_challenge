@@ -39,22 +39,36 @@ mod input {
 }
 
 fn main() {
-    let n = scan!(u8);
-    for _ in 0..n {
-        let m = scan!(usize);
-        let points = (0..m).map(|_| scan!(i32, i32)).collect::<Vec<_>>();
-        let mut s = points
-            .windows(2)
-            .map(|w| {
-                let &[(x1, y1), (x2, y2)] = w else {
-                    unreachable!()
-                };
-                (x1 - x2) * (y1 + y2)
+    let n = scan!(usize);
+    let mut platforms = (0..n).map(|_| scan!(u32, u32, u32)).collect::<Vec<_>>();
+    platforms.sort_unstable_by_key(|&(h, _, _)| h);
+    let mut sum = 0;
+    for i in 0..n {
+        let (h, l, r) = platforms[i];
+        let max_l = platforms[..i]
+            .iter()
+            .rev()
+            .find_map(|&(h2, l2, r2)| {
+                if (l2..r2).contains(&l) {
+                    Some(h2)
+                } else {
+                    None
+                }
             })
-            .sum::<i32>();
-        let &(first_x, first_y) = points.first().unwrap();
-        let &(last_x, last_y) = points.last().unwrap();
-        s += (last_x - first_x) * (last_y + first_y);
-        println!("{}", s.abs() as f64 / 2.);
+            .unwrap_or_default();
+        let max_r = platforms[..i]
+            .iter()
+            .rev()
+            .find_map(|&(h2, l2, r2)| {
+                if (l2 + 1..=r2).contains(&r) {
+                    Some(h2)
+                } else {
+                    None
+                }
+            })
+            .unwrap_or_default();
+        // println!("{} {} {}", max_l, h, max_r);
+        sum += h - max_l + h - max_r;
     }
+    println!("{}", sum);
 }
