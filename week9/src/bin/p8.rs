@@ -42,7 +42,7 @@ mod input {
 
 fn main() {
     let c = scan!(usize);
-    let points = (0..c).map(|_| scan!(i32, i32)).collect::<HashSet<_>>();
+    let points = (0..c).map(|_| scan!(i64, i64)).collect::<HashSet<_>>();
     let mut points = points.into_iter().collect::<Vec<_>>();
     let c = points.len();
     if c == 1 {
