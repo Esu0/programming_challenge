@@ -94,6 +94,9 @@ fn main() {
     while let Some(entry) = queue.first_entry() {
         let (time, nodes) = entry.remove_entry();
         for node in nodes {
+            if visited[node] {
+                continue;
+            }
             visited[node] = true;
             if node == n + 1 {
                 println!("{:.6}", time.0);
@@ -102,7 +105,10 @@ fn main() {
             for &(next, t) in &adj_list[node] {
                 let next_time = time.0 + t;
                 if !visited[next] {
-                    queue.entry(F64Ord(next_time)).or_insert_with(|| Vec::with_capacity(1)).push(next);
+                    queue
+                        .entry(F64Ord(next_time))
+                        .or_insert_with(|| Vec::with_capacity(1))
+                        .push(next);
                 }
             }
         }
